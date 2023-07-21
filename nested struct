@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+struct vd
+{
+    int rno;
+    char model[10];
+    char state[30];
+};
+struct owner
+{
+    char name[20];
+    int age;
+    vd veh;
+};
+int main() 
+{
+  owner o;
+  cout<<"Enter name: ";
+  cin.get(o.name,20);
+  cout<<"Enter age: ";
+  cin>>o.age;
+  cout<<"Enter registartion number: ";
+  cin>>o.veh.rno;
+  cout<<"Enter model name: ";
+  cin>>o.veh.model;
+  cout<<"Enter state: ";
+  cin>>o.veh.state;
+  
+  cout<<"\nOwner Name: "<<o.name;
+  cout<<"\nOwner age: "<<o.age;
+  cout<<"\nVehicle details: ";
+  cout<<o.veh.rno<<","<<o.veh.model<<","<<o.veh.state;
+  
+   return 0;
+}

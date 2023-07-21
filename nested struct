@@ -1,17 +1,17 @@
 #include <iostream>
 using namespace std;
 
-struct vd
-{
-    int rno;
-    char model[10];
-    char state[30];
-};
+
 struct owner
 {
     char name[20];
     int age;
-    vd veh;
+    struct vd
+{
+    int rno;
+    char model[10];
+    char state[30];
+}veh;
 };
 int main() 
 {
@@ -29,6 +29,11 @@ int main()
   
   cout<<"\nOwner Name: "<<o.name;
   cout<<"\nOwner age: "<<o.age;
+  cout<<"\nVehicle details: ";
+  cout<<o.veh.rno<<","<<o.veh.model<<","<<o.veh.state;
+  
+   return 0;
+}
   cout<<"\nVehicle details: ";
   cout<<o.veh.rno<<","<<o.veh.model<<","<<o.veh.state;
   

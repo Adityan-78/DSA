@@ -1,0 +1,18 @@
+#include <iostream>
+struct rectangle
+{
+ int breadth;
+ int length;
+};
+ 
+int main()
+{
+    rectangle rec;
+    std::cout<<"Enter breadth:  ";
+    std::cin >>rec.breadth;
+    std::cout<<"Enter length: ";
+    std::cin >>rec.length;
+    std::cout<<"Area of recangle is:"<<(rec.breadth*rec.length);
+    return 0;
+
+}

@@ -34,8 +34,3 @@ int main()
   
    return 0;
 }
-  cout<<"\nVehicle details: ";
-  cout<<o.veh.rno<<","<<o.veh.model<<","<<o.veh.state;
-  
-   return 0;
-}

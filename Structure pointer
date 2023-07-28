@@ -1,0 +1,31 @@
+#include<stdio.h>
+struct vehicle
+{
+    char model[50];
+    int regno;
+    char state[50];
+    char owner[50];
+};
+int main()
+{
+    struct vehicle *vehptr,veh1;
+    vehptr=&veh1;
+    
+    printf("Enter model: ");
+    scanf("%s",&vehptr->model);
+    
+    printf("Enter regno: ");
+    scanf("%d",&vehptr->regno);
+    
+    printf("Enter state: ");
+    scanf("%s",&vehptr->state);
+    
+    printf("Enter owner name: ");
+    scanf("%s",&vehptr->owner);
+    
+    printf("\n\n\nDetails of the vehicle are given below:-\n\n");
+    printf("Owner name\t model\t Registration no\t State\t\n ");
+    printf("%s\t  %s\t  %d\t\t\t\t %s\t",vehptr->owner,vehptr->model,vehptr->regno,vehptr->state);
+    
+    return 0;
+}

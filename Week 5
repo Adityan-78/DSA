@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to insert a new node at the end of the linked list
+void insertAtEnd(struct Node** head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+// Function to display the linked list
+void display(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    int numNodes, value;
+
+    printf("Enter the number of nodes: ");
+    scanf("%d", &numNodes);
+
+    for (int i = 0; i < numNodes; i++) {
+        printf("Enter the value for node %d: ", i + 1);
+        scanf("%d", &value);
+        insertAtEnd(&head, value);
+    }
+
+    printf("Linked List: ");
+    display(head);
+
+    return 0;
+}

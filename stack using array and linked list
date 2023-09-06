@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Structure for the stack using an array
+struct ArrayStack {
+    int capacity;
+    int top;
+    int* array;
+};
+
+// Function to create a new node for the linked list
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to create a new stack using an array
+struct ArrayStack* createArrayStack(int capacity) {
+    struct ArrayStack* stack = (struct ArrayStack*)malloc(sizeof(struct ArrayStack));
+    stack->capacity = capacity;
+    stack->top = -1;
+    stack->array = (int*)malloc(capacity * sizeof(int));
+    return stack;
+}
+
+// Function to check if the array stack is full
+int isFull(struct ArrayStack* stack) {
+    return stack->top == stack->capacity - 1;
+}
+
+// Function to check if the array stack is empty
+int isEmpty(struct ArrayStack* stack) {
+    return stack->top == -1;
+}
+
+// Function to push an element onto the array stack
+void pushArray(struct ArrayStack* stack, int data) {
+    if (isFull(stack)) {
+        printf("Array Stack Overflow\n");
+        return;
+    }
+    stack->array[++stack->top] = data;
+}
+
+// Function to pop an element from the array stack
+int popArray(struct ArrayStack* stack) {
+    if (isEmpty(stack)) {
+        printf("Array Stack Underflow\n");
+        return -1;
+    }
+    return stack->array[stack->top--];
+}
+
+// Function to push an element onto the linked list stack
+void pushList(struct Node** root, int data) {
+    struct Node* newNode = createNode(data);
+    newNode->next = *root;
+    *root = newNode;
+}
+
+// Function to pop an element from the linked list stack
+int popList(struct Node** root) {
+    if (*root == NULL) {
+        printf("Linked List Stack Underflow\n");
+        return -1;
+    }
+    struct Node* temp = *root;
+    int data = temp->data;
+    *root = (*root)->next;
+    free(temp);
+    return data;
+}
+
+// Main function
+int main() {
+    struct ArrayStack* arrayStack = createArrayStack(5);
+    struct Node* listStack = NULL;
+
+    pushArray(arrayStack, 1);
+    pushArray(arrayStack, 2);
+    pushArray(arrayStack, 3);
+
+    pushList(&listStack, 4);
+    pushList(&listStack, 5);
+    pushList(&listStack, 6);
+
+    printf("Array Stack: ");
+    while (!isEmpty(arrayStack)) {
+        printf("%d ", popArray(arrayStack));
+    }
+
+    printf("\nLinked List Stack: ");
+    while (listStack != NULL) {
+        printf("%d ", popList(&listStack));
+    }
+
+    return 0;
+}

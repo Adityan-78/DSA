@@ -1,0 +1,42 @@
+#include <stdio.h>
+#define MAX_SIZE 100
+
+int tree[MAX_SIZE];
+
+void insert(int value, int index) {
+    tree[index] = value;
+}
+
+void display(int size) {
+    for (int i = 0; i < size; i++) {
+        if (tree[i] != -1) {
+            printf("%d ", tree[i]);
+        } else {
+            printf("_ ");
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int size;
+    printf("Enter the number of elements in the tree: ");
+    scanf("%d", &size);
+
+    // Initialize the tree with -1 (indicating empty nodes)
+    for (int i = 0; i < MAX_SIZE; i++) {
+        tree[i] = -1;
+    }
+
+    printf("Enter %d elements for the tree (in level order): ", size);
+    for (int i = 0; i < size; i++) {
+        int value;
+        scanf("%d", &value);
+        insert(value, i);
+    }
+
+    printf("The binary tree in array representation is: ");
+    display(size);
+
+    return 0;
+}

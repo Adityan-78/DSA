@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -41,15 +42,6 @@ void inOrderTraversal(struct Node* root) {
     inOrderTraversal(root->right);
 }
 
-// Function to find the minimum value node in a BST
-struct Node* findMin(struct Node* node) {
-    struct Node* current = node;
-    while (current && current->left != NULL) {
-        current = current->left;
-    }
-    return current;
-}
-
 // Function to delete a node in the BST
 struct Node* deleteNode(struct Node* root, int key) {
     if (root == NULL) {
@@ -73,7 +65,10 @@ struct Node* deleteNode(struct Node* root, int key) {
         }
 
         // Node with two children: Get the inorder successor (smallest in the right subtree)
-        struct Node* temp = findMin(root->right);
+        struct Node* temp = root->right;
+        while (temp->left != NULL) {
+            temp = temp->left;
+        }
 
         // Copy the inorder successor's data to this node
         root->data = temp->data;
@@ -99,19 +94,15 @@ int main() {
     inOrderTraversal(root);
     printf("\n");
 
-    // Deleting nodes
+    // Insert a new node
+    root = insert(root, 35);
+    printf("In-order traversal after inserting 35: ");
+    inOrderTraversal(root);
+    printf("\n");
+
+    // Deleting a node
     root = deleteNode(root, 20);
     printf("In-order traversal after deleting 20: ");
-    inOrderTraversal(root);
-    printf("\n");
-
-    root = deleteNode(root, 30);
-    printf("In-order traversal after deleting 30: ");
-    inOrderTraversal(root);
-    printf("\n");
-
-    root = deleteNode(root, 50);
-    printf("In-order traversal after deleting 50: ");
     inOrderTraversal(root);
     printf("\n");
 

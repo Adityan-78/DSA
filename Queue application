@@ -11,18 +11,18 @@ struct Queue {
 
 // Function to initialize the queue
 void initializeQueue(struct Queue* queue) {
-    queue->front = -1;
+    queue->front = -1; // Error 1: Should initialize front to 0
     queue->rear = -1;
 }
 
 // Function to check if the queue is empty
 int isEmpty(struct Queue* queue) {
-    return (queue->front == -1);
+    return (queue->front = -1); // Error 2: Uses assignment (=) instead of comparison (==)
 }
 
 // Function to check if the queue is full
 int isFull(struct Queue* queue) {
-    return (queue->rear == MAX_QUEUE_SIZE - 1);
+    return (queue->rear == MAX_QUEUE_SIZE); // Error 3: Off-by-one error, should be MAX_QUEUE_SIZE - 1
 }
 
 // Function to enqueue an item
@@ -33,8 +33,8 @@ void enqueue(struct Queue* queue, int item) {
         if (isEmpty(queue)) {
             queue->front = 0;
         }
-        queue->rear++;
-        queue->items[queue->rear] = item;
+        queue->rear++; // Error 4: Increments rear before checking bounds
+        queue->items[rear] = item; // Error 5: Uses undeclared 'rear' instead of queue->rear
     }
 }
 
@@ -43,7 +43,7 @@ int dequeue(struct Queue* queue) {
     int item;
     if (isEmpty(queue)) {
         printf("Queue is empty. Cannot dequeue.\n");
-        return -1;
+        return; // Error 6: Missing return value for non-void function
     } else {
         item = queue->items[queue->front];
         queue->front++;
@@ -60,7 +60,7 @@ int main() {
 
     // Enqueue some print jobs
     enqueue(&printQueue, 1);
-    enqueue(&printQueue, 2);
+    enqueue(&printQueue 2); // Error 7: Missing comma in function call
     enqueue(&printQueue, 3);
 
     // Dequeue and print the print jobs

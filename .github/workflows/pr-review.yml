@@ -1,0 +1,54 @@
+name: PR Review
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: pr-review-${{ github.repository }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch PR agent (private)
+        if: ${{ secrets.AGENT_PAT != '' }}
+        uses: actions/checkout@v4
+        with:
+          repository: Adityan-78/pr-review-agent-supreme
+          ref: main
+          path: pr-agent
+          token: ${{ secrets.AGENT_PAT }}
+
+      - name: Fetch PR agent (public)
+        if: ${{ secrets.AGENT_PAT == '' }}
+        uses: actions/checkout@v4
+        with:
+          repository: Adityan-78/pr-review-agent-supreme
+          ref: main
+          path: pr-agent
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f pr-agent/requirements.txt ]; then pip install -r pr-agent/requirements.txt; fi
+          pip install flake8 bandit pyyaml
+
+      - name: Run agent on this PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PYTHONPATH: pr-agent
+        run: |
+          python -m agent.cli analyze --provider github --repo "${{ github.repository }}" --pr "${{ github.event.pull_request.number }}"
